@@ -9,8 +9,6 @@ dotenv.config();
 
 const PORT = Number(env("PORT", "3000"));
 
-console.log({ PORT });
-
 export const setupServer = () => {
   const app = express();
 
