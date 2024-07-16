@@ -2,7 +2,6 @@ import express from "express";
 import pino from "pino-http";
 import cors from "cors";
 import dotenv from "dotenv";
-import "dotenv/config";
 import { getAllContacts, getContactById } from "./services/contacts.js";
 
 dotenv.config();
@@ -10,6 +9,7 @@ dotenv.config();
 const PORT = Number(process.env.PORT);
 
 console.log({ PORT });
+
 export const setupServer = () => {
   const app = express();
 
