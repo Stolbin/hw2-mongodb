@@ -1,9 +1,7 @@
-import express from "express";
-
-const app = express();
-
-app.use((error, req, res, next) => {
-  res.status(500).send({ message: "Something went wrong" });
-});
-
-export default app;
+export const errorHandler = (err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).send({
+    status: err.status || 500,
+    message: err.message || "Internal Server Error",
+  });
+};
