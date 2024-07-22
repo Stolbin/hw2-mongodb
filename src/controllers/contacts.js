@@ -11,7 +11,7 @@ export async function getAllContactsController(req, res, next) {
   try {
     const contacts = await getAllContacts();
 
-    res.status(200).json({
+    res.json({
       status: 200,
       message: "Successfully found contacts!",
       data: contacts,
@@ -84,7 +84,7 @@ export const updateContactController = async (req, res, next) => {
       throw createHttpError(404, `Contact not found with id ${contactId}`);
     }
 
-    res.status(200).json({
+    res.json({
       status: 200,
       message: `Successfully updated contact with id ${contactId}!`,
       data: updatedContact,
@@ -103,7 +103,7 @@ export const patchContactController = async (req, res, next) => {
     return;
   }
 
-  res.status(201).json({
+  res.json({
     status: 201,
     message: "Successfully putched a contact",
     data: result.contact,
