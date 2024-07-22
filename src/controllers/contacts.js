@@ -1,4 +1,3 @@
-import createHttpError from "http-errors";
 import {
   getAllContacts,
   getContactById,
@@ -6,12 +5,13 @@ import {
   deleteContact,
   updateContact,
 } from "../services/contacts.js";
+import createHttpError from "http-errors";
 
 export async function getAllContactsController(req, res, next) {
   try {
     const contacts = await getAllContacts();
 
-    res.status(200).json({
+    res.json({
       status: 200,
       message: "Successfully found contacts!",
       data: contacts,
@@ -23,16 +23,16 @@ export async function getAllContactsController(req, res, next) {
 
 export async function getContactByIdController(req, res, next) {
   try {
-    const { contact_id } = req.params;
-    const contact = await getContactById(contact_id);
+    const { contactId } = req.params;
+    const contact = await getContactById(contactId);
 
     if (!contact) {
-      throw createHttpError(404, `Contact not found with id ${contact_id}`);
+      throw createHttpError(404, `Contact not found with id ${contactId}`);
     }
 
-    res.status(200).json({
+    res.json({
       status: 200,
-      message: `Successfully found contact with id ${contact_id}!`,
+      message: `Successfully found contact with id ${contactId}!`,
       data: contact,
     });
   } catch (error) {
@@ -43,12 +43,12 @@ export async function getContactByIdController(req, res, next) {
 export const createContactController = async (req, res, next) => {
   try {
     const payload = req.body;
-    const newContact = await createContact(payload);
+    const contact = await createContact(payload);
 
-    res.status(201).json({
+    res.json({
       status: 201,
       message: "Successfully created contact!",
-      data: newContact,
+      data: contact,
     });
   } catch (error) {
     next(error);
@@ -57,36 +57,36 @@ export const createContactController = async (req, res, next) => {
 
 export const deleteContactController = async (req, res, next) => {
   try {
-    const { contact_id } = req.params;
-    const deletedContact = await deleteContact(contact_id);
+    const { contactId } = req.params;
+    const contact = await deleteContact(contactId);
 
-    if (!deletedContact) {
-      throw createHttpError(404, `Contact not found with id ${contact_id}`);
+    if (!contact) {
+      throw createHttpError(404, `Contact not found with id ${contactId}`);
     }
 
-    res.status(200).json({
+    res.json({
       status: 200,
-      message: `Successfully deleted contact with id ${contact_id}!`,
-      data: deletedContact,
+      message: `Successfully deleted contact with id ${contactId}!`,
+      data: contact,
     });
   } catch (error) {
     next(error);
   }
 };
 
-export const upsertContactController = async (req, res, next) => {
+export const updateContactController = async (req, res, next) => {
   try {
-    const { contact_id } = req.params;
+    const { contactId } = req.params;
     const payload = req.body;
-    const updatedContact = await updateContact(contact_id, payload);
+    const updatedContact = await updateContact(contactId, payload);
 
     if (!updatedContact) {
-      throw createHttpError(404, `Contact not found with id ${contact_id}`);
+      throw createHttpError(404, `Contact not found with id ${contactId}`);
     }
 
-    res.status(200).json({
+    res.json({
       status: 200,
-      message: `Successfully updated contact with id ${contact_id}!`,
+      message: `Successfully updated contact with id ${contactId}!`,
       data: updatedContact,
     });
   } catch (error) {
@@ -95,16 +95,15 @@ export const upsertContactController = async (req, res, next) => {
 };
 
 export const patchContactController = async (req, res, next) => {
-  const { contact_id } = req.params;
-
-  const result = await updateContact(contact_id, req.body);
+  const { contactId } = req.params;
+  const result = await updateContact(contactId, req.body);
 
   if (!result) {
     next(createHttpError(404, "Contact not found"));
     return;
   }
 
-  res.status(201).json({
+  res.json({
     status: 201,
     message: "Successfully putched a contact",
     data: result.contact,
