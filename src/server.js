@@ -19,9 +19,7 @@ export const setupServer = () => {
       limit: "100kb",
     })
   );
-
   app.use(cors());
-
   app.use(
     pino({
       transport: {
@@ -29,9 +27,7 @@ export const setupServer = () => {
       },
     })
   );
-
   app.use(contactsRouter);
-
   app.use("*", notFoundErrorHandler);
   app.use(errorHandler);
 
