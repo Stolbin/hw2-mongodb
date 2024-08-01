@@ -25,15 +25,10 @@ router.post(
   validateBody(createContactSchema),
   ctrlWrapper(createContactController)
 );
-router.delete(
-  "/contacts/:contactId",
-  isValidId,
-  ctrlWrapper(deleteContactController)
-);
+router.delete("/contacts/:contactId", ctrlWrapper(deleteContactController));
 router.put("/contacts/:contactId", ctrlWrapper(updateContactController));
 router.patch(
   "/contacts/:contactId",
-  isValidId,
   validateBody(updateContactSchema),
   ctrlWrapper(patchContactController)
 );
