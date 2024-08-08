@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { EMAIL_REGEX } from "../constants/constans";
+import { EMAIL_REGEX } from "../constants/constans.js";
 
 export const registerUserSchema = Joi.object({
   name: Joi.string().min(3).max(30),
