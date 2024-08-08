@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import contactsRouter from "./routers/contacts.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { notFoundErrorHandler } from "./middlewares/notFoundHandler.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
@@ -13,6 +14,8 @@ const PORT = Number(process.env.PORT || 3000);
 export const setupServer = () => {
   const app = express();
 
+  app.use(cookieParser());
+
   app.use(
     express.json({
       type: ["application/json", "application/vnd.api+json"],
@@ -20,6 +23,7 @@ export const setupServer = () => {
     })
   );
   app.use(cors());
+
   app.use(
     pino({
       transport: {
@@ -27,8 +31,11 @@ export const setupServer = () => {
       },
     })
   );
+
   app.use(contactsRouter);
+
   app.use("*", notFoundErrorHandler);
+
   app.use(errorHandler);
 
   app.listen(PORT, () => {
