@@ -5,6 +5,15 @@ import { Users } from "../db/models/user.js";
 import { Sessions } from "../db/models/session.js";
 import { ACCESS_TOKEN_TTL, REFRESH_TOKEN_TTL } from "../constants/constans.js";
 
+const createSession = () => {
+  return {
+    accessToken: randomBytes(30).toString("base64"),
+    refreshToken: randomBytes(30).toString("base64"),
+    accessTokenValidUntil: new Date(Date.now() + ACCESS_TOKEN_TTL),
+    refreshTokenValidUntil: new Date(Date.now() + REFRESH_TOKEN_TTL),
+  };
+};
+
 export const registerUser = async (payload) => {
   const user = await Users.findOne({ email: payload.email });
 
@@ -35,20 +44,8 @@ export const loginUser = async (payload) => {
 
   return await Sessions.create({
     userId: user._id,
-    accessToken: randomBytes(30).toString("base64"),
-    refreshToken: randomBytes(30).toString("base64"),
-    accessTokenValidUntil: new Date(Date.now() + ACCESS_TOKEN_TTL),
-    refreshTokenValidUntil: new Date(Date.now() + REFRESH_TOKEN_TTL),
+    ...createSession(),
   });
-};
-
-const createSession = () => {
-  return {
-    accessToken: randomBytes(30).toString("base64"),
-    refreshToken: randomBytes(30).toString("base64"),
-    accessTokenValidUntil: new Date(Date.now() + ACCESS_TOKEN_TTL),
-    refreshTokenValidUntil: new Date(Date.now() + REFRESH_TOKEN_TTL),
-  };
 };
 
 export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
