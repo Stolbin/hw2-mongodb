@@ -13,17 +13,15 @@ import {
   createContactSchema,
   updateContactSchema,
 } from "../validation/contacts.js";
-import { isValidId } from "../middlewares/validateId.js";
 import { authenticate } from "../middlewares/authenticate.js";
 
 const contactsRouter = Router();
 
 contactsRouter.use(authenticate);
-contactsRouter.use("/:contactId", isValidId);
 contactsRouter.get("/", ctrlWrapper(getAllContactsController));
 contactsRouter.get("/:contactId", ctrlWrapper(getContactByIdController));
 contactsRouter.post(
-  "/",
+  "",
   validateBody(createContactSchema),
   ctrlWrapper(createContactController)
 );
