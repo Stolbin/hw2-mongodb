@@ -1,5 +1,5 @@
 import { Contact } from "../db/models/contact.js";
-import mongoose from "mongoose";
+import { Schema } from "mongoose";
 import { calculatePaginationData } from "../utils/calculatePaginationData.js";
 import { SORT_ORDER } from "../constants/constans.js";
 
@@ -43,7 +43,7 @@ export const getAllContacts = async ({
 };
 
 export const getContactById = async (id, userId) => {
-  if (!mongoose.Types.ObjectId.isValid(id)) {
+  if (!Schema.Types.ObjectId.isValid(id)) {
     return null;
   }
   const contact = await Contact.findOne({ _id: id, userId });

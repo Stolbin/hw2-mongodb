@@ -11,7 +11,7 @@ export const createContactSchema = Joi.object({
 });
 
 export const updateContactSchema = Joi.object({
-  name: Joi.string().min(3).max(25).required(),
+  name: Joi.string().min(3).max(25),
   phoneNumber: Joi.string().min(5).max(25),
   email: Joi.string().min(5).max(25).pattern(EMAIL_REGEX),
   isFavourite: Joi.boolean(),
