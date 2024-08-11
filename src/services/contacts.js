@@ -64,10 +64,14 @@ export const createContact = async (payload, userId) => {
   return contact;
 };
 
-export const updateContact = async (id, payload) => {
-  const rawResult = await Contact.findOneAndUpdate({ _id: id }, payload, {
-    new: true,
-  });
+export const updateContact = async (id, payload, userId) => {
+  const rawResult = await Contact.findOneAndUpdate(
+    { _id: id, userId },
+    payload,
+    {
+      new: true,
+    }
+  );
 
   if (!rawResult) {
     return null;
