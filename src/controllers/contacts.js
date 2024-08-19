@@ -9,6 +9,8 @@ import createHttpError from "http-errors";
 import { parsePaginationParams } from "../utils/parsePaginationParams.js";
 import { parseSortParams } from "../utils/parseSortParams.js";
 import { parseFilterParams } from "../utils/parseFilterParams.js";
+import { saveFileToUploadDir } from "../utils/saveFileToUploadDir.js";
+import { saveFileToCloudinary } from "../utils/saveFileToCloudinary.js";
 
 export async function getAllContactsController(req, res, next) {
   const { page, perPage } = parsePaginationParams(req.query);
@@ -59,8 +61,31 @@ export const createContactController = async (req, res, next) => {
   try {
     const payload = req.body;
     const userId = req.user._id;
+    const photo = req.file;
     const contact = await createContact(payload, userId);
 
+    let photoUrl;
+    if (photo) {
+      if (process.env("ENABLE_CLOUDINARY") === "true") {
+        photoUrl = await saveFileToCloudinary(photo);
+      } else {
+        photoUrl = await saveFileToUploadDir(photo);
+      }
+    }
+    const result = await updateContact(userId, {
+      ...req.body,
+      photo: photoUrl,
+    });
+
+    if (!result) {
+      next(createHttpError(404, "Contact not found"));
+      return;
+    }
+    res.json({
+      status: 200,
+      message: `Successfully patched a contact!`,
+      data: result.contact,
+    });
     res.status(201).json({
       status: 201,
       message: "Successfully created contact!",
