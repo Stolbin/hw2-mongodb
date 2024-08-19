@@ -7,6 +7,8 @@ export const createContactSchema = Joi.object({
   email: Joi.string().min(5).max(25).pattern(EMAIL_REGEX).required(),
   isFavourite: Joi.boolean(),
   contactType: Joi.string().valid("work", "home", "personal"),
+  userId: Joi.string(),
+  photo: Joi.string(),
 });
 
 export const updateContactSchema = Joi.object({
@@ -15,4 +17,6 @@ export const updateContactSchema = Joi.object({
   email: Joi.string().min(5).max(25).pattern(EMAIL_REGEX),
   isFavourite: Joi.boolean(),
   contactType: Joi.string().valid("work", "home", "personal"),
+  userId: Joi.string(),
+  photo: Joi.string(),
 });
