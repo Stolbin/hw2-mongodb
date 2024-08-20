@@ -1,5 +1,4 @@
 import { Contact } from "../db/models/contact.js";
-import mongoose from "mongoose";
 import { calculatePaginationData } from "../utils/calculatePaginationData.js";
 import { SORT_ORDER } from "../constants/constans.js";
 import { saveFile } from "../utils/saveFile.js";
@@ -43,29 +42,28 @@ export const getAllContacts = async ({
   };
 };
 
-export const getContactById = async (id, payload, userId) => {
-  const contactPayload = { ...payload, userId };
-  const existingContact = await Contact.findOne(contactPayload);
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return null;
-  }
+export const getContactById = async (id, userId) => {
+  const contactPayload = { _id: id, userId };
+  const contact = await Contact.findOne(contactPayload);
+  return contact;
+};
+
+export const createContact = async ({ photo, name, ...payload }, userId) => {
+  const existingContact = await Contact.findOne({ name, userId });
+
   if (existingContact) {
     const error = new Error("Such contact already exists");
     error.status = 409;
     throw error;
   }
-  const contact = await Contact.findOne({ _id: id, userId });
-  return contact;
-};
 
-export const createContact = async ({ photo, ...payload }, userId) => {
   let url = null;
 
   if (photo) {
     url = await saveFile(photo);
   }
 
-  return await Contact.create({ ...payload, userId, photo: url });
+  return await Contact.create({ ...payload, name, userId, photo: url });
 };
 
 export const updateContact = async (
@@ -86,21 +84,6 @@ export const updateContact = async (
     { new: true }
   );
 };
-
-// export const updateContact = async (id, payload, userId) => {
-//   const rawResult = await Contact.findOneAndUpdate(
-//     { _id: id, userId },
-//     payload,
-//     {
-//       new: true,
-//     }
-//   );
-
-//   if (!rawResult) {
-//     return null;
-//   }
-//   return rawResult;
-// };
 
 export const deleteContact = async (id, userId) => {
   return await Contact.findOneAndDelete({ _id: id, userId });
