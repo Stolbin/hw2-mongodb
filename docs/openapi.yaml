@@ -9,7 +9,7 @@ info:
 tags:
   - name: Contacts
 servers:
-  - url: https://nodejs-hw-7-mongodb.onrender.com
+  - url: https://hw-7-mongodb.onrender.com
   - url: http://localhost:3000
 paths:
   /auth/register:
