@@ -97,7 +97,7 @@ paths:
       tags:
         - auth
       summary: Refresh user session
-      operationId: refreshUserSession
+      operationId: refreshUsersSession
       description: Refresh the session of the currently authenticated user.
       responses:
         "200":
@@ -121,7 +121,7 @@ paths:
       tags:
         - auth
       summary: Send password reset email
-      operationId: sendResetEmail
+      operationId: requestResetToken
       description: Send a password reset email to the user.
       requestBody:
         required: true
@@ -378,7 +378,7 @@ paths:
       tags:
         - contacts
       summary: Update a contact by ID
-      operationId: updateContactById
+      operationId: updateContact
       description: Update a specific contact by its unique ID.
       security:
         - bearerAuth: []
@@ -416,7 +416,7 @@ paths:
                   format: binary
       responses:
         "200":
-          description: Contact updated
+          description: Successfully updated contact with id
           content:
             application/json:
               schema:
@@ -429,7 +429,7 @@ paths:
       tags:
         - contacts
       summary: Delete a contact by ID
-      operationId: deleteContactById
+      operationId: deleteContact
       description: Delete a specific contact by its unique ID.
       security:
         - bearerAuth: []
@@ -437,11 +437,11 @@ paths:
         - name: contactId
           in: path
           required: true
-          description: ID of the contact to delete
+          description: Successfully deleted contact with id
           schema:
             type: string
       responses:
-        "204":
+        "200":
           description: Contact deleted
         "401":
           $ref: "#/components/responses/Unauthorized"
