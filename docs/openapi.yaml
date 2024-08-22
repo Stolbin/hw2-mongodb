@@ -57,7 +57,7 @@ paths:
               $ref: "#/components/schemas/LoginUserRequest"
       responses:
         "200":
-          description: Successfully logged in a user
+          description: Successfully logged in an user!
           content:
             application/json:
               schema:
@@ -101,7 +101,7 @@ paths:
       description: Refresh the session of the currently authenticated user.
       responses:
         "200":
-          description: Successfully refreshed a session
+          description: Successfully refreshed a session!
           content:
             application/json:
               schema:
@@ -131,7 +131,7 @@ paths:
               $ref: "#/components/schemas/SendResetEmailRequest"
       responses:
         "200":
-          description: Reset password email has been successfully sent
+          description: Reset password email has been successfully sent!
           content:
             application/json:
               schema:
@@ -159,7 +159,7 @@ paths:
               $ref: "#/components/schemas/ResetPasswordRequest"
       responses:
         "200":
-          description: Password has been successfully reset
+          description: Password has been successfully reset!
           content:
             application/json:
               schema:
@@ -326,7 +326,7 @@ paths:
                   format: binary
       responses:
         "201":
-          description: Creates a contact
+          description: Successfully created contact!
           content:
             application/json:
               schema:
@@ -365,7 +365,7 @@ paths:
             type: string
       responses:
         "200":
-          description: Contact found
+          description: Successfully found contact with id
           content:
             application/json:
               schema:
@@ -379,7 +379,7 @@ paths:
         - contacts
       summary: Update a contact by ID
       operationId: updateContact
-      description: Update a specific contact by its unique ID.
+      description: Successfully updated contact with id
       security:
         - bearerAuth: []
       parameters:
@@ -437,12 +437,12 @@ paths:
         - name: contactId
           in: path
           required: true
-          description: Successfully deleted contact with id
+          description: ID of the contact to delete
           schema:
             type: string
       responses:
         "200":
-          description: Contact deleted
+          description: Successfully deleted contact with id
         "401":
           $ref: "#/components/responses/Unauthorized"
         "404":
