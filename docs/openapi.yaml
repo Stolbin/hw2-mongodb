@@ -1,23 +1,21 @@
 openapi: 3.1.0
 info:
   version: 1.0.0
-  title: Contacts app
+  title: Contacts List App
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   description: This is a documentation of contacts app
 tags:
   - name: Contacts
-  - name: Auth
-    description: Auth operations.
 servers:
-  - url: https://nodejs-hw-7-mongodb.onrender.com
-  - url: http://localhost:8080
+  - url: https://hw-7-mongodb.onrender.com
+  - url: http://localhost:3000
 paths:
   /auth/register:
     post:
       tags:
-        - auth
+        - Auth
       summary: Register a new user
       operationId: registerUser
       description: Register a new user with the provided details.
@@ -99,7 +97,7 @@ paths:
       tags:
         - auth
       summary: Refresh user session
-      operationId: refreshUserSession
+      operationId: refreshUsersSession
       description: Refresh the session of the currently authenticated user.
       responses:
         "200":
@@ -123,7 +121,7 @@ paths:
       tags:
         - auth
       summary: Send password reset email
-      operationId: sendResetEmail
+      operationId: requestResetToken
       description: Send a password reset email to the user.
       requestBody:
         required: true
@@ -380,7 +378,7 @@ paths:
       tags:
         - contacts
       summary: Update a contact by ID
-      operationId: updateContactById
+      operationId: updateContact
       description: Update a specific contact by its unique ID.
       security:
         - bearerAuth: []
@@ -418,7 +416,7 @@ paths:
                   format: binary
       responses:
         "200":
-          description: Contact updated
+          description: Successfully updated contact with id
           content:
             application/json:
               schema:
@@ -431,7 +429,7 @@ paths:
       tags:
         - contacts
       summary: Delete a contact by ID
-      operationId: deleteContactById
+      operationId: deleteContact
       description: Delete a specific contact by its unique ID.
       security:
         - bearerAuth: []
@@ -439,11 +437,11 @@ paths:
         - name: contactId
           in: path
           required: true
-          description: ID of the contact to delete
+          description: Successfully deleted contact with id
           schema:
             type: string
       responses:
-        "204":
+        "200":
           description: Contact deleted
         "401":
           $ref: "#/components/responses/Unauthorized"
