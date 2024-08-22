@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   version: 1.0.0
-  title: Contacts app
+  title: Contacts List App
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -12,7 +12,7 @@ tags:
     description: Auth operations.
 servers:
   - url: https://nodejs-hw-7-mongodb.onrender.com
-  - url: http://localhost:8080
+  - url: http://localhost:3000
 paths:
   /auth/register:
     post:
