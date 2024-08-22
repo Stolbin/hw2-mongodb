@@ -6,7 +6,9 @@ import { SWAGGER_PATH } from "../constants/constans.js";
 
 export const swaggerDocs = () => {
   try {
-    const swaggerDoc = JSON.parse(fs.readFileSync(SWAGGER_PATH).toString());
+    const swaggerDoc = JSON.parse(fs.readFileSync(SWAGGER_PATH).toString(), {
+      encoding: "utf-8",
+    });
     return [...swaggerUI.serve, swaggerUI.setup(swaggerDoc)];
   } catch (err) {
     return (req, res, next) =>

@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "version": "1.0.0",
-    "title": "Contacts app",
+    "title": "Contacts List App",
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": "https://nodejs-hw-7-mongodb.onrender.com"
+      "url": "https://hw-7-mongodb.onrender.com"
     },
     {
       "url": "http://localhost:3000"
@@ -20,16 +20,14 @@
   "tags": [
     {
       "name": "Contacts"
-    },
-    {
-      "name": "Auth",
-      "description": "Auth operations."
     }
   ],
   "paths": {
     "/auth/register": {
       "post": {
-        "tags": ["auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Register a new user",
         "operationId": "registerUser",
         "description": "Register a new user with the provided details.",
@@ -75,7 +73,9 @@
     },
     "/auth/login": {
       "post": {
-        "tags": ["auth"],
+        "tags": [
+          "auth"
+        ],
         "summary": "Login a user",
         "operationId": "loginUser",
         "description": "Login a user with the provided credentials.",
@@ -121,7 +121,9 @@
     },
     "/auth/logout": {
       "post": {
-        "tags": ["auth"],
+        "tags": [
+          "auth"
+        ],
         "summary": "Logout a user",
         "operationId": "logoutUser",
         "description": "Logout the currently authenticated user.",
@@ -150,9 +152,11 @@
     },
     "/auth/refresh": {
       "post": {
-        "tags": ["auth"],
+        "tags": [
+          "auth"
+        ],
         "summary": "Refresh user session",
-        "operationId": "refreshUserSession",
+        "operationId": "refreshUsersSession",
         "description": "Refresh the session of the currently authenticated user.",
         "responses": {
           "200": {
@@ -186,9 +190,11 @@
     },
     "/auth/send-reset-email": {
       "post": {
-        "tags": ["auth"],
+        "tags": [
+          "auth"
+        ],
         "summary": "Send password reset email",
-        "operationId": "sendResetEmail",
+        "operationId": "requestResetToken",
         "description": "Send a password reset email to the user.",
         "requestBody": {
           "required": true,
@@ -229,7 +235,9 @@
     },
     "/auth/reset-pwd": {
       "post": {
-        "tags": ["auth"],
+        "tags": [
+          "auth"
+        ],
         "summary": "Reset password",
         "operationId": "resetPassword",
         "description": "Reset the password of the user using the provided token.",
@@ -282,7 +290,9 @@
     },
     "/contacts": {
       "get": {
-        "tags": ["contacts"],
+        "tags": [
+          "contacts"
+        ],
         "summary": "Get list of contacts",
         "operationId": "getContacts",
         "description": "Get list of contacts with this endpoint",
@@ -322,7 +332,10 @@
             "name": "sortOrder",
             "schema": {
               "type": "string",
-              "enum": ["asc", "desc"],
+              "enum": [
+                "asc",
+                "desc"
+              ],
               "example": "asc"
             }
           },
@@ -331,7 +344,11 @@
             "name": "type",
             "schema": {
               "type": "string",
-              "enum": ["work", "home", "personal"],
+              "enum": [
+                "work",
+                "home",
+                "personal"
+              ],
               "example": "personal"
             }
           },
@@ -351,7 +368,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -416,7 +437,9 @@
         }
       },
       "post": {
-        "tags": ["contacts"],
+        "tags": [
+          "contacts"
+        ],
         "summary": "Create a new contact",
         "operationId": "createContact",
         "description": "Create a new contact with payload",
@@ -430,7 +453,11 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": ["name", "phoneNumber", "contactType"],
+                "required": [
+                  "name",
+                  "phoneNumber",
+                  "contactType"
+                ],
                 "properties": {
                   "name": {
                     "description": "Contact's name",
@@ -455,7 +482,11 @@
                   "contactType": {
                     "description": "Contact's type",
                     "type": "string",
-                    "enum": ["work", "home", "personal"]
+                    "enum": [
+                      "work",
+                      "home",
+                      "personal"
+                    ]
                   },
                   "photo": {
                     "description": "Contact's photo",
@@ -474,7 +505,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -501,7 +536,9 @@
     },
     "/contacts/{contactId}": {
       "get": {
-        "tags": ["contacts"],
+        "tags": [
+          "contacts"
+        ],
         "summary": "Get a contact by ID",
         "operationId": "getContactById",
         "description": "Retrieve a specific contact by its unique ID.",
@@ -541,7 +578,9 @@
         }
       },
       "patch": {
-        "tags": ["contacts"],
+        "tags": [
+          "contacts"
+        ],
         "summary": "Update a contact by ID",
         "operationId": "updateContactById",
         "description": "Update a specific contact by its unique ID.",
@@ -583,7 +622,11 @@
                   },
                   "contactType": {
                     "type": "string",
-                    "enum": ["work", "home", "personal"]
+                    "enum": [
+                      "work",
+                      "home",
+                      "personal"
+                    ]
                   },
                   "photo": {
                     "type": "string",
@@ -614,7 +657,9 @@
         }
       },
       "delete": {
-        "tags": ["contacts"],
+        "tags": [
+          "contacts"
+        ],
         "summary": "Delete a contact by ID",
         "operationId": "deleteContactById",
         "description": "Delete a specific contact by its unique ID.",
@@ -724,7 +769,11 @@
     "schemas": {
       "RegisterUserRequest": {
         "type": "object",
-        "required": ["name", "email", "password"],
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
         "properties": {
           "name": {
             "type": "string",
@@ -775,7 +824,10 @@
       },
       "LoginUserRequest": {
         "type": "object",
-        "required": ["email", "password"],
+        "required": [
+          "email",
+          "password"
+        ],
         "properties": {
           "email": {
             "type": "string",
@@ -800,7 +852,9 @@
       },
       "SendResetEmailRequest": {
         "type": "object",
-        "required": ["email"],
+        "required": [
+          "email"
+        ],
         "properties": {
           "email": {
             "type": "string",
@@ -824,7 +878,10 @@
       },
       "ResetPasswordRequest": {
         "type": "object",
-        "required": ["token", "password"],
+        "required": [
+          "token",
+          "password"
+        ],
         "properties": {
           "token": {
             "type": "string",
@@ -839,7 +896,11 @@
       },
       "contact": {
         "type": "object",
-        "required": ["name", "phoneNumber", "contactType"],
+        "required": [
+          "name",
+          "phoneNumber",
+          "contactType"
+        ],
         "properties": {
           "name": {
             "type": "string",
@@ -859,7 +920,11 @@
           },
           "contactType": {
             "type": "string",
-            "enum": ["work", "home", "personal"]
+            "enum": [
+              "work",
+              "home",
+              "personal"
+            ]
           },
           "photo": {
             "type": "string",
