@@ -8,8 +8,6 @@ info:
   description: This is a documentation of contacts app
 tags:
   - name: Contacts
-  - name: Auth
-    description: Auth operations.
 servers:
   - url: https://nodejs-hw-7-mongodb.onrender.com
   - url: http://localhost:3000
@@ -17,7 +15,7 @@ paths:
   /auth/register:
     post:
       tags:
-        - auth
+        - Auth
       summary: Register a new user
       operationId: registerUser
       description: Register a new user with the provided details.
